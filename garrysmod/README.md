@@ -1,0 +1,2 @@
+# About this file
+Don't get your hopes up; SourceMod hasn't supported Garry's Mod for years. Nothing really SourceMod-y you can do with these files, but perhaps these could be of use to anyone making LUA mods?
