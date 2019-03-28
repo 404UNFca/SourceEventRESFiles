@@ -5,7 +5,7 @@ Contains any event-related .res files from Source Engine games compatible with S
 *Entries marked with a ✔ are articles I have already updated.*
 * [Generic Source Events](https://wiki.alliedmods.net/Generic_Source_Events)
 * [Generic Source Server Events](https://wiki.alliedmods.net/Generic_Source_Server_Events)
-* [Alien Swarm Events](https://wiki.alliedmods.net/Alien_Swarm_Events)
+* [Alien Swarm Events](https://wiki.alliedmods.net/Alien_Swarm_Events) ✔
 * [Black Mesa Events](https://wiki.alliedmods.net/Black_Mesa_Events)
 * [Codename Cure Events](https://wiki.alliedmods.net/Codename_Cure_Events)
 * [Counter-Strike: Source Events](https://wiki.alliedmods.net/Counter-Strike:_Source_Events)
