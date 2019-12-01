@@ -1,8 +1,8 @@
 # SourceRESFiles
-Contains any event-related .res files from Source Engine games compatible with SourceMod. Created to help me out with keeping the AlliedModders Wiki's event articles up to date.
+Contains any event-related .res files from Source Engine games compatible with SourceMod. Very useful for engine-specific plugin development.
 
 ## Regarding Garry's Mod
-Just in case someone plans on updating articles listed above, don't bother updating the Garry's Mod events article. SourceMod no longer supports Garry's Mod (hasn't for years) and the article really should be deleted.
+SourceMod no longer supports Garry's Mod (hasn't for years) but it's got a res file so I'm including it any way.
 
 ## Currently missing event .RES files for
 *Some of these mods don't have an events article on the AlliedModders Wiki [but do have EngineVersion support](https://sm.alliedmods.net/new-api/halflife/EngineVersion) in SourceMod*
