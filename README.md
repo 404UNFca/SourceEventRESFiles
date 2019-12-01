@@ -24,7 +24,7 @@ Just in case someone plans on updating articles listed above, don't bother updat
 - Hidden: Source
 - Empires
 - Dystopia
-- Codename Cure
+- ~~Codename Cure~~
 - DOTA 2
 
 ## Easiest way to locate .RES files
