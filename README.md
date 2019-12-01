@@ -7,7 +7,6 @@ Just in case someone plans on updating articles listed above, don't bother updat
 ## Currently missing event .RES files for
 *Some of these mods don't have an events article on the AlliedModders Wiki [but do have EngineVersion support](https://sm.alliedmods.net/new-api/halflife/EngineVersion) in SourceMod*
 - Dark Messiah
-- The Ship
 - Bloody Good Time
 - E.Y.E. Divine Cybermancy
 - Blade Symphony
@@ -18,14 +17,16 @@ Just in case someone plans on updating articles listed above, don't bother updat
 - No More Room in Hell
 - Neotokyo
 - Iron Grip: Source
-- Zombie Panic! Source
 - SourceForts
 - Perfect Dark: Source
 - Hidden: Source
 - Empires
 - Dystopia
-- ~~Codename Cure~~
 - DOTA 2
+- ~~The Ship~~
+- ~~Codename Cure~~
+- ~~Pirates, Vikings & Knights II~~
+- ~~Zombie Panic! Source~~
 
 ## Easiest way to locate .RES files
 1. Navigate to wherever the mod's files are stored, i.e. `C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf` and search for **\*events.res**
