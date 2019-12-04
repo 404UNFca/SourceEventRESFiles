@@ -14,7 +14,6 @@ SourceMod no longer supports Garry's Mod (hasn't for years) but it's got a res f
 - Black Mesa Multiplayer
 - Day of Infamy
 - Half-Life 2: Capture the Flag
-- No More Room in Hell
 - Neotokyo
 - Iron Grip: Source
 - SourceForts
@@ -27,6 +26,7 @@ SourceMod no longer supports Garry's Mod (hasn't for years) but it's got a res f
 - ~~Codename Cure~~
 - ~~Pirates, Vikings & Knights II~~
 - ~~Zombie Panic! Source~~
+- ~~No More Room in Hell~~
 
 ## Easiest way to locate .RES files
 `.res` files can be in one of two places in most cases. For this example, we'll use Team Fortress 2;
