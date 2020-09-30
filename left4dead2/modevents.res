@@ -137,6 +137,9 @@
 	"hegrenade_detonate"
 	{
 		"userid"	"short"
+		"x"		"float"
+		"y"		"float"
+		"z"		"float"
 	}
 
 	"bullet_impact"
@@ -278,8 +281,10 @@
 	{
 		"issue"			"string"
 		"param1"		"string"
+		"votedata"		"string"
 		"team"			"byte"
 		"initiator"		"long" // entity id of the player who initiated the vote
+		"reliable"		"1"		// this event is reliable
 	}
 	"vote_changed"
 	{
@@ -292,10 +297,12 @@
 		"details"		"string"
 		"param1"		"string"
 		"team"			"byte"
+		"reliable"		"1"		// this event is reliable
 	}
 	"vote_failed"
 	{
 		"team"			"byte"
+		"reliable"		"1"		// this event is reliable
 	}
 	"vote_cast_yes"
 	{
@@ -309,7 +316,7 @@
 	}
 	
 	// TERROR:
-	"infected_hurt"
+	"infected_hurt" // only fires for common and witches (zombies that can't be players)
 	{
 		"local"		"1"		// don't network this, its way too spammy
 		"attacker"	"short"	 	// player userid who attacked
@@ -319,7 +326,7 @@
 		"type"		"long"		// damage type
 	}
 
-	"infected_death"
+	"infected_death" // only fires for common and witches (zombies that can't be players)
 	{
 		"attacker"	"short"	 	// user ID who killed
 		"infected_id" "short"	// ID of the infected that died
@@ -331,6 +338,17 @@
 		"submerged"	"bool"		// indicates the infected was submerged
 	}
 	
+	"zombie_death" // Fires for all types of infected (common & specials)
+	{
+		"attacker"	"short"	 	// user ID who killed
+		"victim"	"long"	 	// entity id of the zombie that died
+		"infected_id" "short"	// zombie type (see enum)
+		"gender"	"short"		// gender (type) of the infected
+		"weapon_id"	"short"		// ID of the weapon used
+		"headshot"	"bool"		// singals a headshot
+		"minigun"	"bool"		// singals a minigun kill
+		"blast"		"bool"		// singals a death from blast damage
+	}
 
 	"hostname_changed"
 	{
@@ -347,6 +365,7 @@
 	"finale_start"
 	{
 		"rushes"		"short"
+		"campaign"		"string"
 	}
 	"finale_rush"
 	{
@@ -354,8 +373,13 @@
 	"finale_escape_start"
 	{
 	}
+	"finale_vehicle_incoming"
+	{
+		"campaign"		"string"
+	}
 	"finale_vehicle_ready"
 	{
+		"campaign"		"string"
 	}
 	"finale_vehicle_leaving"
 	{
@@ -586,6 +610,7 @@
 	"player_left_start_area"		// when a player leaves the player start area
 	{
 		"userid"	"short"			// person who left
+		"playercount"	"byte"
 	}
 
 	"player_entered_checkpoint"		// when a basecombatcharacter enters a checkpoint area
@@ -658,6 +683,8 @@
 		"userid"	"short"		// Player who killed the witch
 		"witchid"	"long"		// Entindex of witch that was killed.
 		"oneshot"	"bool"      // TRUE if the Witch was killed with one shot
+		"melee_only" 	"bool"		// TRUE if the witch was only killed by melee attacks (no blast, burn, or bullet damage)
+		"bride"		"bool"		// bride variant?
 	}
 	
 	"tank_spawn"
@@ -731,7 +758,8 @@
 		"userid"		"short"		// Who stopped it
 		"victim"		"short"		// And who was being choked
 		"smoker"		"short"		// The tongue owner
-		"release_type"	"short"		// How did it break?
+		"release_type"		"short"		// How did it break?
+		"damage_type"		"long"		// bullet, slash, chainsaw
 	}
 	
 	"lunge_shove"
@@ -745,6 +773,7 @@
 		"userid"	"short"			// player who did the lunging
 		"victim"	"short"			// player that got lunged
 		"distance"	"long"			// Distance from pounce start to contact
+		"damage"	"short"
 	}
 	
 	"pounce_end"
@@ -757,6 +786,12 @@
 	{
 		"userid"	"short"			// Who stopped it
 		"victim"	"short"			// And who was being pounced
+	}
+	
+	"pounce_attempt_stopped"
+	{
+		"userid"	"short"			// Who stopped it
+		"weaponid"	"short"			// used weapon ID
 	}
 	
 	"fatal_vomit"
@@ -775,6 +810,7 @@
 	{
 		"rescuer"	"short"			// player that did the rescuing
 		"victim"	"short"			// the survivor being rescued
+		"dooridx"	"long"			// ent index of the rescue door
 	}
 	
 	"survivor_rescue_abandoned"
@@ -817,6 +853,7 @@
 		"entindex"	"long"  // entindex of thing breaking
 		"material"	"byte"	// BREAK_GLASS, BREAK_WOOD, etc
 		"hulkonly"  "bool" // SF_BREAK_HULK_ONLY
+		"achievement" "short" // tag to identify achievment on the client 
 	}
 	
 	"achievement_earned"
@@ -925,7 +962,7 @@
 		"userid"	"short"
 		"subject"	"long"		// The door
 	}
-		"explain_crane"			// explain how to lower the box on the crane.
+	"explain_crane"			// explain how to lower the box on the crane.
 	{
 		"userid"	"short"
 		"subject"	"long"		// The lever/button
@@ -948,7 +985,7 @@
 		"subject"	"long"		// The van
 	}
 	
-		"explain_mainstreet"			// explain how to lower the forklift
+	"explain_mainstreet"			// explain how to lower the forklift
 	{
 		"userid"	"short"
 		"subject"	"long"		// The forklift
@@ -984,6 +1021,8 @@
 	
 	"scavenge_round_start"	// a scavenge round has begun
 	{
+		"round"		"byte"		// round number, 1 based
+		"firsthalf"	"bool"		// start of the first half of the round
 	}
 
 	"scavenge_round_halftime"	// a scavenge round is in halftime
@@ -1073,7 +1112,7 @@
 		"context"	"byte"	//split screen message context
 		"weaponid"	"byte"
 		"weaponslot"	"byte"
-		"dropped_by_infected"	"bool"	// Infected dropped the weapon
+		"dropped_by_infected"	"byte"	// gender of the Infected that dropped the weapon
 	}
 	
 	"hunter_punched"
@@ -1140,6 +1179,12 @@
 		"attacker"	"short"	 	// user id of killer
 		"solo"		"bool"		// TRUE if a player single-handedly killed the Tank
 		"melee_only" "bool"		// TRUE if the tank was only killed by melee attacks (no blast, burn, or bullet damage)
+		"l4d1_only"	"bool"		// TRUE if l4d1 survivors inflicted damage and the l4d2 survivors did not
+	}    
+	
+	"tank_rock_killed"
+	{
+		"userid"	"short"	 	// user id of killer
 	}    
 	
 	// Used for a notification message when an achievement fails to write
@@ -1156,6 +1201,11 @@
 
 	// Used to know when we elapse 30 minutes on a survival map
 	"survival_at_30min"
+	{
+	}		
+
+	// Used for an achievement
+	"survival_at_10min"
 	{
 	}		
 	
@@ -1457,6 +1507,7 @@
 	{
 		"userid"	"short"   	// user ID of dead jockey
 		"attacker"	"short"	 	// user id of killer
+		"weapon"	"string"	// weapon name
 	}    
 	"non_melee_fired"				
 	{
@@ -1465,6 +1516,7 @@
 	"infected_decapitated"
 	{
 		"userid"	"short"		// userid of the player who did the decapitation
+		"weapon"	"string"	// melee weapon name
 	}
 	"upgrade_pack_added"
 	{
@@ -1477,6 +1529,7 @@
 	}
 	"triggered_car_alarm"
 	{
+		"userid"	"short"		// person who triggered the car alarm
 	}
 	"panic_event_finished"
 	{
@@ -1495,6 +1548,11 @@
 		"victim"	"short"
 	}
 	"charger_carry_end"
+	{
+		"userid"	"short"   	// user ID of the charger
+		"victim"	"short"
+	}
+	"charger_carry_kill"
 	{
 		"userid"	"short"   	// user ID of the charger
 		"victim"	"short"
@@ -1530,6 +1588,9 @@
 		"victim"	"short"		// player that dropped it
 	}
 	
+	"explain_need_gnome_to_continue"
+	{
+	}
 	"explain_survivor_glows_disabled"
 	{
 		"userid"	"short"		// The player we're explaining to
@@ -1578,6 +1639,326 @@
 	{
 		"userid"	"short"		// The player that destroyed it
 	}	
+	"explain_sewer_gate"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	"explain_sewer_run"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	"explain_c6m3_finale"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	"finale_bridge_lowering"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	// I was holding down the m60 trigger, and now I'm not
+	"m60_streak_ended"
+	{
+	}
+	
+	"chair_charged"
+	{
+		"userid"	"short"
+	}
+	
+	"song_played"
+	{
+	}
+	
+	"foot_locker_opened"
+	{
+		"userid"	"short"
+	}
+	
+// River Campaign Events
+
+	"explain_train_lever"			// explain how to operate the train lever.
+	{
+		"userid"	"short"
+		"subject"	"long"		// The lever on box car
+	}
+	
+	"explain_train_boss"	
+	{
+		"userid"	"short"
+		"subject"	"long"		
+	}
+	
+	"explain_train_exit" 	// Someone tried to exit the tank train car before the tank was dead.
+	{
+		"userid"		"short"
+		"subject"		"long"
+	}
+		
+	"explain_freighter"				// explain how to start the freighter survival map
+	{								// map l4d_sv_freighter
+		"userid"	"short"
+		"subject"	"long"			// generator button
+	}	
+	
+	"explain_highrise_finale2"		
+	{
+		"userid"	"short"
+		"subject"	"long"		
+	}
+	
+	"explain_start_generator"	
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+	
+	"explain_bridge_button"		
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+	
+	"explain_restart_generator"	
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+	
+	"finale_elevator_ready"
+	{
+	}
+	
+	"finale_bridge_ready"
+	{
+	}
+	
+	"generator_started"
+	{
+	}
+	
+	"infected_explosive_barrel_kill"
+	{
+		"userid"	"short"		// the player that initiated the barrel explosion, through explosion dmg or resulting burn
+	}	
+	
+	"player_begin_sacrifice_run"
+	{
+		"userid"	"short"		// player that jumps off the bridge to sacrifice him/herself
+	}
+	
+	"player_complete_sacrifice"
+	{
+		"userid"	"short"		// player that successfully restarts the generator and dies
+	}	
+
+	"weapon_out_of_ammo"
+	{
+		"userid"	"short"
+		"weapon"	"string" 	// used weapon name
+		"weaponid"	"short"		// used weapon ID
+	}
+
+	"all_weapons_out_of_ammo"
+	{
+		"userid"	"short"
+	}
+	
+	"drastic_music_change"
+	{
+		"userid"	"short"		// The survivor who is the subject of the new music
+		"music"		"string"	// Name of the music being played
+	}	
+
+	
+	"christmas_gift_grab"
+	{
+		"userid"	"short"
+	}
+	
+// Crash Course and Cold Stream Events
+	
+	"explain_DLC3howitzer"	
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+
+	"explain_DLC3generator_button"	
+	{							
+		"userid"	"short"		
+		"subject"	"long"	
+	
+	}
+
+	"explain_DLC3lift_lever"	
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+		
+	"explain_DLC3barrels"
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+	
+	"explain_DLC3radio"
+	{							
+		"userid"	"short"		
+		"subject"	"long"	
+	}
+	
+	"explain_DLC3door"
+	{							
+		"userid"	"short"		
+		"subject"	"long"	
+	}
+	
+	"explain_onslaught"
+	{							
+		"userid"	"short"		
+		"subject"	"long"		
+	}
+
+	"start_holdout"
+	{
+	}
+
+	"scriptedmode_reloadhud"
+	{
+	}
+	
+	"christmas_gift_grab"
+	{
+		"userid"	"short"
+	}
+	
+	"on_resources_changed"
+	{
+		"newcount"	"long"
+	}
+	
+	"on_helicopter_begin"
+	{
+		"available"	"bool"
+	}
+
+	"on_helicopter_end"
+	{
+		"available"	"bool"
+	}
+	
+	"on_cooldown_begin"
+	{
+		"state" "bool"
+	}
+	
+	"on_cooldown_end"
+	{
+		"state" "bool"
+	}
+	
+	"explain_lighthouse_gate"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_generator"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_gen_button"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_finale_event"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_restart_gen"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_gas"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_lighthouse_finale"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"player_left_safe_area"		// when a player leaves the safe area
+	{
+		"userid"	"short"			// person who left
+		"playercount"	"byte"
+	}
+	
+	"explain_junkyard_fuel"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_container_drop"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"explain_container_ready"
+	{
+		"userid"	"short"
+		"subject"	"long"
+	}
+	
+	"weapon_drop_to_prop"
+	{
+		"userid"	"short"		// player who dropped the weapon
+		"item"		"string"	// weapon string "weapon_*"
+		"propid"	"long"		// entindex of the dropped weapon
+	}
+	
+	"jockey_punched"
+	{
+		"userid"		"short"	// player who caused ignition
+		"jockeyuserid"	"long"	// user ID of Jockey
+		"islunging"		"bool"	// TRUE if the Jockey was in the act of lunging
+	}
+	
+	"jockey_headshot"
+	{
+		"userid"		"short"	// player who caused ignition
+		"jockeyuserid"	"long"	// user ID of Jockey
+		"islunging"		"bool"	// TRUE if the Jockey was in the act of lunging
+	}
+
+	"golden_crowbar_pickup"
+	{
+		"userid"	"short"		// The player who picked up the crowbar
+	}
+
+	"player_left_concert_stage"
+	{
+		"userid"	"short"		// The player who left the concert finale stage
+	}
 }
 
 
